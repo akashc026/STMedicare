@@ -12,12 +12,12 @@ export function FormsList(): JSX.Element {
   return (
     <Document>
       <h1>Forms</h1>
-      <table className="foo-table">
+      <table className="foo-table" style={{width:'100%'}}>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Publisher</th>
-            <th>Last Updated</th>
+            <th align='left'>Title</th>
+            <th align='left'>Publisher</th>
+            <th align='left'>Last Updated</th>
             <th></th>
           </tr>
         </thead>
@@ -31,10 +31,10 @@ export function FormsList(): JSX.Element {
                 <Button size="sm" onClick={() => navigate(`/Questionnaire/${form.id}`)}>
                   View
                 </Button>
-                <Button size="sm" onClick={() => navigate(`/Questionnaire/${form.id}/editor`)}>
+                <Button style={{marginLeft:'20px'}} size="sm" onClick={() => navigate(`/Questionnaire/${form.id}/editor`)}>
                   Edit
                 </Button>
-                <Button size="sm" onClick={() => navigate(`/Questionnaire/${form.id}/assign`)}>
+                <Button style={{marginLeft:'20px'}} size="sm" onClick={() => navigate(`/Questionnaire/${form.id}/assign`)}>
                   Assign
                 </Button>
               </td>
@@ -42,9 +42,9 @@ export function FormsList(): JSX.Element {
           ))}
         </tbody>
       </table>
-      <div style={{ marginTop: 50 }}>
-        <Button>New</Button>
-        <Button>Import</Button>
+      <div style={{display:'flex', justifyContent:'center', marginTop: 50 }}>
+        <Button style={{width:"12%"}} >New</Button>
+        <Button style={{marginLeft:'20px',width:"12%"}}>Import</Button>
       </div>
     </Document>
   );

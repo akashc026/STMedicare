@@ -104,12 +104,8 @@ const tabs: Record<string, string> = {
   Patients: '/patients',
   Visits: '/visits',
   Forms: '/forms',
-  Reports: '/reports',
-  'Care Plans': '/careplans',
-  Messages: '/messages',
-  Rx: '/rx',
-  'Transition of Care': '/Questionnaire/d582df91-be08-420a-80e1-e5ee0aff250c',
-  'Send Message': '/Questionnaire/f1b01312-662c-4fad-80af-53ef1eb319c2',
+  Reports: '/reports'
+
 };
 
 export function HeaderBar(): JSX.Element {
@@ -123,7 +119,7 @@ export function HeaderBar(): JSX.Element {
 
 
   const items = Object.keys(tabs).map((tab) => (
-    <Tabs.Tab value={tab} key={tab}>
+    <Tabs.Tab style={{width:'20%'}} value={tab} key={tab}>
       {tab}
     </Tabs.Tab>
   ));

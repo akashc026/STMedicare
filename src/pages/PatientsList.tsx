@@ -11,13 +11,13 @@ export function PatientsList(): JSX.Element {
   return (
     <Document>
       <h1>Patients</h1>
-      <table className="foo-table">
+      <table className="foo-table" style={{width:'100%'}}>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>DoB</th>
-            <th>Email</th>
-            <th></th>
+            <th align='left'>Name</th>
+            <th align='left'>DoB</th>
+            <th align='left'>Email</th>
+            <th align='left'> Click To View</th>
           </tr>
         </thead>
         <tbody>
@@ -37,9 +37,9 @@ export function PatientsList(): JSX.Element {
           ))}
         </tbody>
       </table>
-      <div style={{ marginTop: 50 }}>
-        <Button onClick={()=> navigate('/Patient/new')}>New</Button>
-        <Button>Import</Button>
+      <div style={{display:'flex', justifyContent:'center',alignItems:'center',width:'100%', marginTop: 50 }}>
+        <Button style={{width:"12%"}} onClick={()=> navigate('/Patient/new')}>New</Button>
+        <Button style={{marginLeft:'20px',width:"12%"}}>Import</Button>
       </div>
     </Document>
   );
