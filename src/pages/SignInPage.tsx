@@ -1,6 +1,7 @@
 import { Text } from '@mantine/core';
-import { Logo, SignInForm } from '@medplum/react';
+import { SignInForm } from '@medplum/react';
 import React from 'react';
+import { ReactComponent as Logo } from './logo-white.svg';
 import { useNavigate } from 'react-router-dom';
 
 export function SignInPage(): JSX.Element {
@@ -13,8 +14,8 @@ export function SignInPage(): JSX.Element {
       
       onSuccess={() => navigate('/')}
     >
-      <Logo size={32} />
-      <Text size="lg">Sign in to Foo Provider</Text>
+      <Logo style={{ width: 200, height: 80 }} />
+      <Text size="lg">Sign in to ST Medicare</Text>
     </SignInForm>
   );
 }
