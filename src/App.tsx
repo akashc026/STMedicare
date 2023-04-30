@@ -20,6 +20,7 @@ import { ResourceSearchPage } from './pages/ResourceSearchPage';
 import { SchedulePage } from './pages/SchedulePage';
 import { SignInPage } from './pages/SignInPage';
 import { TaskPage } from './pages/TaskPage';
+import { Register } from './pages/Register';
 
 export function App(): JSX.Element | null {
   const medplum = useMedplum();
@@ -37,6 +38,7 @@ export function App(): JSX.Element | null {
           <Routes>
             <Route path="/" element={profile ? <HomePage /> : <LandingPage />} />
             <Route path="/signin" element={<SignInPage />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/patients" element={<PatientsList />} />
             <Route path="/reports" element={<ReportsPage />} />

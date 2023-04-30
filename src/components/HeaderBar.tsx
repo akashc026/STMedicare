@@ -4,7 +4,7 @@ import { Burger, Container, createStyles, Group, Menu, Tabs, Text, UnstyledButto
 import { useDisclosure } from '@mantine/hooks';
 import { formatHumanName, ProfileResource } from '@medplum/core';
 import { HumanName } from '@medplum/fhirtypes';
-import { ResourceAvatar, useMedplumProfile } from '@medplum/react';
+import { ResourceAvatar, useMedplumContext, useMedplumProfile } from '@medplum/react';
 import {
   IconChevronDown,
   IconHeart,
@@ -19,6 +19,9 @@ import {
 import React, { useState } from 'react';
 import { Link, Location, useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from './logo-white.svg';
+
+
+
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -116,6 +119,8 @@ export function HeaderBar(): JSX.Element {
   const { classes, theme, cx } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const auth = useMedplumContext();
+
 
   const items = Object.keys(tabs).map((tab) => (
     <Tabs.Tab value={tab} key={tab}>
@@ -164,7 +169,7 @@ export function HeaderBar(): JSX.Element {
               <Menu.Label>Settings</Menu.Label>
               <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>Account settings</Menu.Item>
               <Menu.Item icon={<IconSwitchHorizontal size={14} stroke={1.5} />}>Change account</Menu.Item>
-              <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}>Logout</Menu.Item>
+              <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}  onClick={()=> {auth.medplum.signOut().then(()=> navigate("/"))}} >Logout</Menu.Item>
 
               <Menu.Divider />
 

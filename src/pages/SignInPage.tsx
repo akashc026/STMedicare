@@ -1,7 +1,7 @@
 import { Text } from '@mantine/core';
 import { SignInForm } from '@medplum/react';
 import React from 'react';
-import { ReactComponent as Logo } from './logo-white.svg';
+import { ReactComponent as Logo } from '../components/logo-white.svg';
 import { useNavigate } from 'react-router-dom';
 
 export function SignInPage(): JSX.Element {
