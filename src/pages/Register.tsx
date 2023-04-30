@@ -22,9 +22,9 @@ export function Register(): JSX.Element {
   const googleClientId="921088377005-3j1sa10vr6hj86jgmdfh2l53v3mp7lfi.apps.googleusercontent.com"
   const siteKey = "6Ldc5M0lAAAAAEMvzUc3JlHltquCnp0r2opVodVO"
 
-  console.log("process",process.env.SITE_KEY )
+//   console.log("process",process.env.SITE_KEY )
   return ( 
-    <RegisterForm type="patient" recaptchaSiteKey={process.env.SITE_KEY as string} googleClientId={googleClientId} onSuccess={() => navigate('/')}>
+    <RegisterForm type="patient" recaptchaSiteKey={siteKey} googleClientId={googleClientId} onSuccess={() => navigate('/')}>
        <Logo style={{ width: 200, height: 80}} />
       <Title>Register new account</Title>
     </RegisterForm>
