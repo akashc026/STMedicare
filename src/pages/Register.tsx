@@ -23,7 +23,7 @@ export function Register(): JSX.Element {
   const siteKey = "6Ldc5M0lAAAAAEMvzUc3JlHltquCnp0r2opVodVO"
 
   return ( 
-    <RegisterForm type="patient" recaptchaSiteKey={siteKey} googleClientId={googleClientId} onSuccess={() => navigate('/')}>
+    <RegisterForm type="patient" recaptchaSiteKey={process.env.SITE_KEY as string} googleClientId={googleClientId} onSuccess={() => navigate('/')}>
        <Logo style={{ width: 200, height: 80}} />
       <Title>Register new account</Title>
     </RegisterForm>
