@@ -19,9 +19,10 @@ import { useNavigate } from 'react-router-dom';
 
 export function Register(): JSX.Element {
   const navigate = useNavigate();
+  const googleClientId="921088377005-3j1sa10vr6hj86jgmdfh2l53v3mp7lfi.apps.googleusercontent.com"
 
   return ( 
-    <RegisterForm type="patient" recaptchaSiteKey={"6Ldc5M0lAAAAAEMvzUc3JlHltquCnp0r2opVodVO"}  onSuccess={() => navigate('/')}>
+    <RegisterForm type="patient" recaptchaSiteKey={"6Ldc5M0lAAAAAEMvzUc3JlHltquCnp0r2opVodVO"} googleClientId={googleClientId} onSuccess={() => navigate('/')}>
        <Logo style={{ width: 200, height: 80}} />
       <Title>Register new account</Title>
     </RegisterForm>
