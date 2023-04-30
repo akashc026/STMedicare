@@ -19,6 +19,7 @@ export function CreateResourcePage(): JSX.Element {
         <ResourceForm
           defaultValue={{ resourceType } as Resource}
           onSubmit={(formData: Resource) => {
+            console.log(formData);
             setError(undefined);
             medplum
               .createResource(formData)

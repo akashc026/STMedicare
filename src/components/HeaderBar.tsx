@@ -23,7 +23,7 @@ import { ReactComponent as Logo } from './logo-white.svg';
 const useStyles = createStyles((theme) => ({
   header: {
     paddingTop: theme.spacing.sm,
-    backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
+    backgroundColor: theme.fn.variant({ variant: 'filled', color: 'blue' }).background,
     borderBottom: `1px solid ${theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background}`,
   },
 
@@ -128,7 +128,7 @@ export function HeaderBar(): JSX.Element {
       <Container fluid className={classes.mainSection}>
         <Group position="apart">
           <Link to="/">
-            <Logo style={{ width: 105, height: 18 }} />
+            <Logo style={{ width: 200, height: 80 }} />
           </Link>
 
           <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" color={theme.white} />

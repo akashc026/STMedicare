@@ -38,7 +38,7 @@ export function PatientsList(): JSX.Element {
         </tbody>
       </table>
       <div style={{ marginTop: 50 }}>
-        <Button>New</Button>
+        <Button onClick={()=> navigate('/Patient/new')}>New</Button>
         <Button>Import</Button>
       </div>
     </Document>

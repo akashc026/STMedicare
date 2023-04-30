@@ -43,6 +43,7 @@ export function App(): JSX.Element | null {
             <Route path="/visits" element={<SchedulePage />} />
             <Route path="/forms" element={<FormsList />} />
             <Route path="/careplans" element={<CarePlansList />} />
+            <Route path="/:resourceType/new" element={<CreateResourcePage />} />
             <Route path="/Patient/:id/:tab/:resourceId" element={<PatientPage />} />
             <Route path="/Patient/:id/:tab" element={<PatientPage />} />
             <Route path="/Patient/:id" element={<PatientPage />} />
@@ -52,7 +53,6 @@ export function App(): JSX.Element | null {
             <Route path="/Questionnaire/:id" element={<QuestionnairePage />} />
             <Route path="/Task/:id" element={<TaskPage />} />
             <Route path="/:resourceType" element={<ResourceSearchPage />} />
-            <Route path="/:resourceType/new" element={<CreateResourcePage />} />
             <Route path="/:resourceType/:id" element={<ResourcePage />} />
             <Route path="/:resourceType/:id/:tab" element={<ResourcePage />} />
           </Routes>
