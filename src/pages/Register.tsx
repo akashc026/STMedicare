@@ -21,7 +21,7 @@ export function Register(): JSX.Element {
   const navigate = useNavigate();
 
   return ( 
-    <RegisterForm type="patient" recaptchaSiteKey={"6LfB3s0lAAAAAIsM0lEJoBX2VRccXuaWo0vfrsjj"}  onSuccess={() => navigate('/')}>
+    <RegisterForm type="patient" recaptchaSiteKey={"6Ldc5M0lAAAAAEMvzUc3JlHltquCnp0r2opVodVO"}  onSuccess={() => navigate('/')}>
        <Logo style={{ width: 200, height: 80}} />
       <Title>Register new account</Title>
     </RegisterForm>
