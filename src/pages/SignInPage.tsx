@@ -15,7 +15,7 @@ export function SignInPage(): JSX.Element {
       onSuccess={() => navigate('/')}
     >
       <Logo style={{ width: 200, height: 80 }} />
-      <Text size="lg">Sign in to ST Medicare</Text>
+      <Text size="lg">Sign in to Softype Medplum</Text>
     </SignInForm>
   );
 }
