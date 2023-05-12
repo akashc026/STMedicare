@@ -102,7 +102,7 @@ const useStyles = createStyles((theme) => ({
 const tabs: Record<string, string> = {
   Worklist: '/',
   Patients: '/patients',
-  Forms: '/forms',
+   Forms: '/forms',
   Visits: '/visits',
   Reports: '/reports'
 
