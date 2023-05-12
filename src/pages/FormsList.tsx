@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export function FormsList(): JSX.Element {
   const medplum = useMedplum();
   const navigate = useNavigate();
-  const forms = medplum.searchResources('Questionnaire', 'name=TB').read();
+  const forms = medplum.searchResources('Questionnaire').read();
 
   return (
     <Document>
@@ -43,7 +43,7 @@ export function FormsList(): JSX.Element {
         </tbody>
       </table>
       <div style={{display:'flex', justifyContent:'center', marginTop: 50 }}>
-        <Button style={{width:"12%"}} >New</Button>
+        <Button style={{width:"12%"}} onClick={()=> navigate('/Questionnaire/new')} >New</Button>
         <Button style={{marginLeft:'20px',width:"12%"}}>Import</Button>
       </div>
     </Document>

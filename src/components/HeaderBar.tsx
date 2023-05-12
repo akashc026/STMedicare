@@ -102,8 +102,8 @@ const useStyles = createStyles((theme) => ({
 const tabs: Record<string, string> = {
   Worklist: '/',
   Patients: '/patients',
-  Visits: '/visits',
   Forms: '/forms',
+  Visits: '/visits',
   Reports: '/reports'
 
 };
