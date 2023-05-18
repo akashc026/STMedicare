@@ -24,7 +24,7 @@ export function Register(): JSX.Element {
 
 //   console.log("process",process.env.SITE_KEY )
   return ( 
-    <RegisterForm type="patient" projectId="7cfa6392-9d79-4738-b560-fa1fc9029c96" recaptchaSiteKey={siteKey} onSuccess={() => navigate('/')}>
+    <RegisterForm type="patient" projectId="7cfa6392-9d79-4738-b560-fa1fc9029c96" recaptchaSiteKey={siteKey} googleClientId={googleClientId} onSuccess={() => navigate('/')}>
        <Logo style={{ width: 200, height: 80}} />
       <Title>Register new account</Title>
     </RegisterForm>
