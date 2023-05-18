@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function Register(): JSX.Element {
   const navigate = useNavigate();
-  // const googleClientId="921088377005-3j1sa10vr6hj86jgmdfh2l53v3mp7lfi.apps.googleusercontent.com"
+  const googleClientId="921088377005-3j1sa10vr6hj86jgmdfh2l53v3mp7lfi.apps.googleusercontent.com"
   const siteKey = "6Ldc5M0lAAAAAEMvzUc3JlHltquCnp0r2opVodVO"
 
 //   console.log("process",process.env.SITE_KEY )
