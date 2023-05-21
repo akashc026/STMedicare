@@ -21,6 +21,7 @@ import { SchedulePage } from './pages/SchedulePage';
 import { SignInPage } from './pages/SignInPage';
 import { TaskPage } from './pages/TaskPage';
 import { Register } from './pages/Register';
+import { UpdateResourcePage } from './pages/UpdatesResourcePage';
 
 export function App(): JSX.Element | null {
   const medplum = useMedplum();
@@ -45,7 +46,7 @@ export function App(): JSX.Element | null {
             <Route path="/forms" element={<FormsList />} />
             <Route path="/careplans" element={<CarePlansList />} />
             <Route path="/:resourceType/new" element={<CreateResourcePage />} />
-            <Route path="/:resourceType/edit/:id" element={<ResourcePage />} />
+            <Route path="/:resourceType/edit/:id" element={<UpdateResourcePage />} />
             <Route path="/Patient/:id/:tab/:resourceId" element={<PatientPage />} />
             <Route path="/Patient/:id/:tab" element={<PatientPage />} />
             <Route path="/Patient/:id" element={<PatientPage />} />
