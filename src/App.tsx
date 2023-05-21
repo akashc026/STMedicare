@@ -13,6 +13,7 @@ import { LandingPage } from './pages/LandingPage';
 import { PatientPage } from './pages/PatientPage';
 import { PatientsList } from './pages/PatientsList';
 import { PlanDefinitionPage } from './pages/PlanDefinitionPage';
+import { Messages } from './pages/MessagesPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { QuestionnairePage } from './pages/QuestionnairePage';
 import { ReportsPage } from './pages/ReportsPage';
@@ -23,6 +24,7 @@ import { SignInPage } from './pages/SignInPage';
 import { TaskPage } from './pages/TaskPage';
 import { Register } from './pages/Register';
 import { UpdateResourcePage } from './pages/UpdatesResourcePage';
+
 
 export function App(): JSX.Element | null {
   const medplum = useMedplum();
@@ -37,7 +39,7 @@ export function App(): JSX.Element | null {
       <ErrorBoundary>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={profile ? <HomePage /> : <LandingPage />} />
+          <Route path="/" element={profile?.resourceType == "Practitioner" ? <HomePage /> : <LandingPage />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<ProfilePage />} />
@@ -46,6 +48,7 @@ export function App(): JSX.Element | null {
             <Route path="/visits" element={<SchedulePage />} />
             <Route path="/forms" element={<FormsList />} />
             <Route path="/careplans" element={<CarePlansList />} />
+            <Route path="/messagepage" element={< Messages/>} />
             <Route path="/appointment" element={<AppointmentList />} />
             <Route path="/:resourceType/new" element={<CreateResourcePage />} />
             <Route path="/:resourceType/edit/:id" element={<UpdateResourcePage />} />
