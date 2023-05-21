@@ -30,7 +30,6 @@ export function App(): JSX.Element | null {
   }
 
   const profile = medplum.getProfile();
-
   return (
     <AppShell fixed={true} header={profile && <HeaderBar />}>
       <ErrorBoundary>
@@ -46,6 +45,7 @@ export function App(): JSX.Element | null {
             <Route path="/forms" element={<FormsList />} />
             <Route path="/careplans" element={<CarePlansList />} />
             <Route path="/:resourceType/new" element={<CreateResourcePage />} />
+            <Route path="/:resourceType/edit/:id" element={<ResourcePage />} />
             <Route path="/Patient/:id/:tab/:resourceId" element={<PatientPage />} />
             <Route path="/Patient/:id/:tab" element={<PatientPage />} />
             <Route path="/Patient/:id" element={<PatientPage />} />
