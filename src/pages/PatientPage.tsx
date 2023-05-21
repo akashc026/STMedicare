@@ -130,6 +130,7 @@ export function PatientPage(): JSX.Element {
               <Tabs.Tab value="labreports">Labs &amp; Imaging</Tabs.Tab>
               <Tabs.Tab value="medication">Medication</Tabs.Tab>
               <Tabs.Tab value="careplans">Care Plans</Tabs.Tab>
+              <Tabs.Tab value="appointment">Appointment List</Tabs.Tab>
               <Tabs.Tab value="forms">Forms</Tabs.Tab>
               <Tabs.Tab value="clinicalnotes">Clinical Notes</Tabs.Tab>
             </Tabs.List>

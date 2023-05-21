@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { HeaderBar } from './components/HeaderBar';
 import { Loading } from './components/Loading';
 import { CarePlansList } from './pages/CarePlansList';
+import { AppointmentList } from './pages/AppointmentList';
 import { CreateResourcePage } from './pages/CreateResourcePage';
 import { FormsList } from './pages/FormsList';
 import { HomePage } from './pages/HomePage';
@@ -45,6 +46,7 @@ export function App(): JSX.Element | null {
             <Route path="/visits" element={<SchedulePage />} />
             <Route path="/forms" element={<FormsList />} />
             <Route path="/careplans" element={<CarePlansList />} />
+            <Route path="/appointment" element={<AppointmentList />} />
             <Route path="/:resourceType/new" element={<CreateResourcePage />} />
             <Route path="/:resourceType/edit/:id" element={<UpdateResourcePage />} />
             <Route path="/Patient/:id/:tab/:resourceId" element={<PatientPage />} />
