@@ -120,8 +120,8 @@ import { useNavigate } from 'react-router-dom';
       <Table sx={{ minWidth: 700 }} verticalSpacing="xl">
         <thead>
           <tr>
-            <th>Employee</th>
-            <th>Job title</th>
+            <th>Patient</th>
+            <th>Date of Birth</th>
             <th>Email</th>
             <th>Phone</th>
             <th />
