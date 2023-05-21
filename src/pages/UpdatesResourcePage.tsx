@@ -1,5 +1,5 @@
 import { Paper, Text } from '@mantine/core';
-import { OperationOutcome, Resource } from '@medplum/fhirtypes';
+import { OperationOutcome, Patient, Resource } from '@medplum/fhirtypes';
 import { Document, ResourceForm, useMedplum } from '@medplum/react';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,7 +10,7 @@ export function UpdateResourcePage(): JSX.Element {
   const { id } = useParams();
   const medplum = useMedplum();
   const [error, setError] = useState<OperationOutcome | undefined>();
-  const resource = medplum.readResource(resourceType,id).read()
+  const resource = medplum.readResource(resourceType as Resource["resourceType"],id!).read()
 
   return (
     <>
