@@ -1,8 +1,8 @@
 import { ActionIcon, Button, Group } from '@mantine/core';
-import { formatDateTime } from '@medplum/core';
+import { createReference, formatDateTime } from '@medplum/core';
 import { Appointment } from '@medplum/fhirtypes';
 import { Document, useMedplum } from '@medplum/react';
-import { IconCheck, IconCross } from '@tabler/icons-react';
+import { IconCheck, IconPlaystationX } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,20 +10,31 @@ export function AppointmentList(): JSX.Element {
   const medplum = useMedplum();
   const navigate = useNavigate();
   const profile = medplum.getProfile();
-  const appointments = medplum.searchResources('Appointment',`practitioner=${profile?.id}`).read();
+  console.log('profile',profile)
+  const appointments = medplum.searchResources('Appointment',`practitioner=Practitioner/${profile?.id},status!=cancelled`).read();
+  console.log('appointments',appointments)
   const handleClick = (appointment:Appointment,action:string)=>{
-    medplum.updateResource({
-      resourceType:'Appointment',
-      id:appointment.id,
-      participant:[
-        {
-          actor:{
-            id:profile?.id
-          },
-          status:action as any
-        }
-      ]
-    })
+    medplum.patchResource(
+      'Appointment',
+      appointment.id as string,
+      [
+        {op: 'replace', path: '/participant/0/status', value: action},
+        {op: 'replace', path: '/status', value: action === "accepted" ? "booked" : "cancelled"},
+      ] 
+      // participant:[
+      //   {
+      //     actor:{
+      //       reference:`Practitioner/${profile?.id}`
+      //       display:profile?.name[0]
+      //     },
+      //     status:action as any
+      //   },
+      //   {
+      //       appointment.participant
+      //   }
+      // ],
+      // status:action === "accepted" ? "booked" : "cancelled"
+    )
   }
 
 
@@ -37,6 +48,7 @@ export function AppointmentList(): JSX.Element {
             <th>Start time</th>
             <th>End time</th>
             <th>last update</th>
+            <th>Status</th>
             <th></th>
           </tr>
         </thead>
@@ -44,18 +56,19 @@ export function AppointmentList(): JSX.Element {
           {appointments.map((appointment) => (
             <tr key={appointment.id}>
               
-              <td>{appointment.participant?.find((op)=>op.actor?.type === "Patient")?.actor?.display}</td>
+              <td>{appointment.participant?.find((op)=>op.actor?.reference?.includes("Patient"))?.actor?.display}</td>
               <td>{appointment.start}</td>
 
               <td>{appointment.end}</td>
               <td>{formatDateTime(appointment.meta?.lastUpdated)}</td>
+              <td>{appointment.status}</td>
               <td>
               <Group spacing={3} position="right">
             <ActionIcon onClick={() =>{ handleClick(appointment,"accepted")}}>
             <IconCheck size="2rem" stroke={3} />
           </ActionIcon>
           <ActionIcon onClick={() => handleClick(appointment,"cancelled")} color="green">
-            <IconCross size="2rem" stroke={1.5} />
+            <IconPlaystationX size="2rem" stroke={1.5} />
           </ActionIcon>
             </Group>
               </td>
