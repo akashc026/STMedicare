@@ -10,10 +10,31 @@ export function Messages(): JSX.Element {
   const medplum = useMedplum();
   const profile = useMedplumProfile() as Practitioner;
   const [messages, setMessages] = useState<Communication[]>();
-  const user_patient = medplum.readResource('Patient' as ResourceType, 'b60fd178-b76b-4cc1-b172-1b7a8b8aa903' as string).read() as Patient;
-  console.log(user_patient);
+  const user_patient = medplum.readResource('Patient' as ResourceType, 'eac64381-6c4f-4cb2-b429-ea85487788e9' as string).read() as Patient;
+  //console.log(user_patient);
+  let data:any = [];
+
+
+
+
 
   useEffect(() => {
+
+    if (profile) {
+      let sender_data: any = [];
+      let receiver_data: any = [];
+      medplum.searchResources('Communication', `sender=${getReferenceString(profile)}`).then((res) => {  res.forEach((d)=>{
+        if(!data.find((e:any)=>{e.id == d.id})){
+          data.push(d)
+        }
+      })});
+      medplum.searchResources('Communication', `recipient=${getReferenceString(profile)}`).then((res) => {  res.forEach((d)=>{
+        if(!data.find((e:any)=>{e.id == d.id})){
+          data.push(d)
+        }
+      })});
+    }
+
     medplum
       .graphql(
         `
@@ -68,14 +89,19 @@ export function Messages(): JSX.Element {
       .catch((err) => console.error(err));
   }, [medplum, profile]);
 
-var msg=   messages?.sort((a,b)=>{
-    let fi= new Date(a?.meta?.lastUpdated as string);
-    let fg= new Date(b?.meta?.lastUpdated as string);
-    return Number(fi)  - Number(fg);
-})
-  console.log(msg);
+  var msg = messages?.sort((a, b) => {
+    let fi = new Date(a?.meta?.lastUpdated as string);
+    let fg = new Date(b?.meta?.lastUpdated as string);
+    return Number(fi) - Number(fg);
+  })
+  // console.log(msg);
   if (!messages) {
     return <Loading />;
+  }
+
+  
+  if (data.length > 0) {   
+    console.log(data);
   }
 
   return (
@@ -83,7 +109,7 @@ var msg=   messages?.sort((a,b)=>{
       <Title>Messages</Title>
       <Divider my="xl" />
       <Stack spacing="xl">
-        { messages.map((resource) => (
+        {messages.map((resource) => (
           <div key={resource.id}>
             <Group align="top">
               <ResourceAvatar size="lg" radius="xl" value={resource.sender?.resource as Practitioner} />

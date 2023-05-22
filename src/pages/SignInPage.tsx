@@ -9,7 +9,7 @@ export function SignInPage(): JSX.Element {
 
   return (
     <SignInForm
-      projectId="a4c92ea7-da43-40e4-91ad-d0f4b76cac5e"
+      projectId="d08db73d-28cd-4590-ace8-06c924a97793"
       googleClientId="921088377005-3j1sa10vr6hj86jgmdfh2l53v3mp7lfi.apps.googleusercontent.com"
       
       onSuccess={() => navigate('/')}

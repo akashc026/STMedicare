@@ -104,7 +104,7 @@ const tabs: Record<string, string> = {
   Patients: '/patients',
    Forms: '/forms',
   Visits: '/visits',
-  Messages: '/message',
+  Messages: '/messagepage',
   Reports: '/reports',
   Appointment:'/appointment'
 
