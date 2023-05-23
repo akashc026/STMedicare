@@ -12,7 +12,7 @@ export function Messages(): JSX.Element {
   const [messages, setMessages] = useState<Communication[]>();
   const user_patient = medplum.readResource('Patient' as ResourceType, 'eac64381-6c4f-4cb2-b429-ea85487788e9' as string).read() as Patient;
   //console.log(user_patient);
-  let data:any = [];
+  let data = new Set();
 
 
 
@@ -21,72 +21,65 @@ export function Messages(): JSX.Element {
   useEffect(() => {
 
     if (profile) {
-      let sender_data: any = [];
-      let receiver_data: any = [];
-      medplum.searchResources('Communication', `sender=${getReferenceString(profile)}`).then((res) => {  res.forEach((d)=>{
-        if(!data.find((e:any)=>{e.id == d.id})){
-          data.push(d)
-        }
-      })});
-      medplum.searchResources('Communication', `recipient=${getReferenceString(profile)}`).then((res) => {  res.forEach((d)=>{
-        if(!data.find((e:any)=>{e.id == d.id})){
-          data.push(d)
-        }
-      })});
-    }
-
-    medplum
-      .graphql(
-        `
-        {
-          CommunicationList(subject: "${getReferenceString(user_patient)}") {
-            resourceType
-            id
-            meta {
-              lastUpdated
-            }
-            payload {
-              contentString
-              contentAttachment {
-                url
-                contentType
-              }
-            }
-            sender {
-              reference
-              resource {
-                ... on Patient {
-                  resourceType
-                  id
-                  name {
-                    given
-                    family
-                  }
-                  photo {
-                    contentType
-                    url
-                  }
-                }
-                ... on Practitioner {
-                  resourceType
-                  id
-                  name {
-                    given
-                    family
-                  }
-                  photo {
-                    contentType
-                    url
-                  }
-                }
-              }
-            }
-          }
-      }
-        `
-      )
-      .then((value) => setMessages(value.data.CommunicationList as Communication[]))
-      .catch((err) => console.error(err));
+     
+    const prom =  medplum.searchResources('Communication', `sender=${getReferenceString(profile)}`)
+    const prom2 =  medplum.searchResources('Communication', `recipient=${getReferenceString(profile)}`)
+    Promise.all([prom,prom2]).then(data=>setMessages([...data[0],...data[1]]))
+    
+  }
+ 
+    // medplum
+    //   .graphql(
+    //     `
+    //     {
+    //       CommunicationList(subject: "${getReferenceString(user_patient)}") {
+    //         resourceType
+    //         id
+    //         meta {
+    //           lastUpdated
+    //         }
+    //         payload {
+    //           contentString
+    //           contentAttachment {
+    //             url
+    //             contentType
+    //           }
+    //         }
+    //         sender {
+    //           reference
+    //           resource {
+    //             ... on Patient {
+    //               resourceType
+    //               id
+    //               name {
+    //                 given
+    //                 family
+    //               }
+    //               photo {
+    //                 contentType
+    //                 url
+    //               }
+    //             }
+    //             ... on Practitioner {
+    //               resourceType
+    //               id
+    //               name {
+    //                 given
+    //                 family
+    //               }
+    //               photo {
+    //                 contentType
+    //                 url
+    //               }
+    //             }
+    //           }
+    //         }
+    //       }
+    //   }
+    //     `
+    //   )
+    //   .then((value) => setMessages(value.data.CommunicationList as Communication[]))
+    //   .catch((err) => console.error(err));
   }, [medplum, profile]);
 
   var msg = messages?.sort((a, b) => {
@@ -94,14 +87,9 @@ export function Messages(): JSX.Element {
     let fg = new Date(b?.meta?.lastUpdated as string);
     return Number(fi) - Number(fg);
   })
-  // console.log(msg);
+  console.log(msg);
   if (!messages) {
     return <Loading />;
-  }
-
-  
-  if (data.length > 0) {   
-    console.log(data);
   }
 
   return (
@@ -112,10 +100,10 @@ export function Messages(): JSX.Element {
         {messages.map((resource) => (
           <div key={resource.id}>
             <Group align="top">
-              <ResourceAvatar size="lg" radius="xl" value={resource.sender?.resource as Practitioner} />
+              <ResourceAvatar size="lg" radius="xl" value={resource.sender as Patient | Practitioner} />
               <div>
                 <Text size="sm" weight={500}>
-                  <ResourceName value={resource.sender?.resource as Patient | Practitioner} />
+                  <ResourceName value={resource.sender as Patient | Practitioner} />
                 </Text>
                 <Text size="xs" color="dimmed">
                   {formatDateTime(resource?.meta?.lastUpdated)}
