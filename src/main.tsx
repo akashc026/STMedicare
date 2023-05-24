@@ -13,7 +13,7 @@ const medplum = new MedplumClient({
 });
 
 const theme: MantineThemeOverride = {
-  primaryColor: 'teal',
+  primaryColor: 'cyan',
   primaryShade: 9,
 };
 

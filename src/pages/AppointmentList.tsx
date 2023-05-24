@@ -163,7 +163,7 @@ export function AppointmentList(): JSX.Element {
                     <Badge fullWidth>Booked</Badge>
                   ) : (
                     <Badge color="red" fullWidth>
-                      Cancelled
+                      {item.status}
                     </Badge>
                   )}
                 </td>

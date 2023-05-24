@@ -24,6 +24,8 @@ import { SignInPage } from './pages/SignInPage';
 import { TaskPage } from './pages/TaskPage';
 import { Register } from './pages/Register';
 import { UpdateResourcePage } from './pages/UpdatesResourcePage';
+import { Measurement } from './pages/Measurement';
+import { Footer } from './components/Footer';
 
 
 export function App(): JSX.Element | null {
@@ -35,7 +37,7 @@ export function App(): JSX.Element | null {
 
   const profile = medplum.getProfile();
   return (
-    <AppShell fixed={true} header={profile && <HeaderBar />}>
+    <AppShell fixed={true} header={profile && <HeaderBar />} footer={profile && <Footer/>}>
       <ErrorBoundary>
         <Suspense fallback={<Loading />}>
           <Routes>
@@ -45,10 +47,10 @@ export function App(): JSX.Element | null {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/patients" element={<PatientsList />} />
             <Route path="/reports" element={<ReportsPage />} />
-            <Route path="/visits" element={<SchedulePage />} />
             <Route path="/forms" element={<FormsList />} />
             <Route path="/careplans" element={<CarePlansList />} />
             <Route path="/messagepage" element={< Messages/>} />
+            <Route path="/:measurementId" element={<Measurement />} />
             <Route path="/appointment" element={<AppointmentList />} />
             <Route path="/:resourceType/new" element={<CreateResourcePage />} />
             <Route path="/:resourceType/edit/:id" element={<UpdateResourcePage />} />

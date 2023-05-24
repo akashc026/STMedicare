@@ -18,16 +18,31 @@ import {
 } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import { Link, Location, useLocation, useNavigate } from 'react-router-dom';
-import { ReactComponent as Logo } from './logo-white.svg';
+import { Logo } from './Logo';
+import { HamburgerMenu } from './HamburgerMenu';
 
 
 
 
 const useStyles = createStyles((theme) => ({
+
+  logoButton: {
+    float: 'left',
+    borderRadius: theme.radius.sm,
+    transition: 'background-color 100ms ease',
+
+    '&:hover': {
+      backgroundColor: theme.fn.lighten(
+        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background as string,
+        0.95
+      ),
+    },
+  },
+
+
   header: {
     paddingTop: theme.spacing.sm,
-    backgroundColor: theme.fn.variant({ variant: 'filled', color: 'blue' }).background,
-    borderBottom: `1px solid ${theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background}`,
+    backgroundColor: theme.fn.variant({ variant: 'filled', color:"yellow.0"}).background,
   },
 
   mainSection: {
@@ -35,14 +50,14 @@ const useStyles = createStyles((theme) => ({
   },
 
   user: {
-    color: theme.white,
+    color: 'black',
     padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
     borderRadius: theme.radius.sm,
     transition: 'background-color 100ms ease',
 
     '&:hover': {
       backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
+        theme.fn.variant({ variant: 'filled', color:'green.1' }).background!,
         0.1
       ),
     },
@@ -78,23 +93,21 @@ const useStyles = createStyles((theme) => ({
   tab: {
     fontWeight: 500,
     height: 38,
-    color: theme.white,
+    color: 'black',
     backgroundColor: 'transparent',
-    borderColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
 
     '&:hover': {
       backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
+        theme.fn.variant({ variant: 'filled', color: 'blue.0' }).background!,
         0.1
       ),
     },
 
     '&[data-active]': {
       backgroundColor: theme.fn.lighten(
-        theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
+        theme.fn.variant({ variant: 'filled', color: 'green.1' }).background!,
         0.1
-      ),
-      borderColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
+      )
     },
   },
 }));
@@ -102,11 +115,9 @@ const useStyles = createStyles((theme) => ({
 const tabs: Record<string, string> = {
   Worklist: '/',
   Patients: '/patients',
-   Forms: '/forms',
-  Visits: '/visits',
   Messages: '/messagepage',
-  Reports: '/reports',
-  Appointment:'/appointment'
+
+  Appointment: '/appointment'
 
 };
 
@@ -120,22 +131,25 @@ export function HeaderBar(): JSX.Element {
   const auth = useMedplumContext();
 
 
+
   const items = Object.keys(tabs).map((tab) => (
-    <Tabs.Tab style={{width:'20%'}} value={tab} key={tab}>
+    <Tabs.Tab style={{ width: '20%' }} value={tab} key={tab}>
       {tab}
     </Tabs.Tab>
   ));
 
   return (
+
     <div className={classes.header}>
       <Container fluid className={classes.mainSection}>
-        <Group position="apart">
-          <Link to="/">
-            <Logo style={{ width: 200, height: 80 }} />
-          </Link>
 
-          <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" color={theme.white} />
-
+        <Group position="left">
+          <HamburgerMenu />
+          <UnstyledButton className={classes.logoButton} onClick={() => navigate('/')}>
+            <Logo width={240} />
+          </UnstyledButton>
+          </Group>
+          <Group position="right" style={{marginTop:'-40px'}}>
           <Menu
             width={260}
             position="bottom-end"
@@ -148,7 +162,7 @@ export function HeaderBar(): JSX.Element {
               <UnstyledButton className={cx(classes.user, { [classes.userActive]: userMenuOpened })}>
                 <Group spacing={7}>
                   <ResourceAvatar value={profile} radius="xl" size={20} />
-                  <Text weight={500} size="sm" sx={{ lineHeight: 1, color: theme.white }} mr={3}>
+                  <Text weight={500} size="sm" sx={{ lineHeight: 1, color: 'black' }} mr={3}>
                     {formatHumanName(profile.name?.[0] as HumanName)}
                   </Text>
                   <IconChevronDown size={12} stroke={1.5} />
@@ -156,26 +170,12 @@ export function HeaderBar(): JSX.Element {
               </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item icon={<IconHeart size={14} stroke={1.5} color={theme.colors.red[6]} />}>Liked posts</Menu.Item>
-              <Menu.Item icon={<IconStar size={14} stroke={1.5} color={theme.colors.yellow[6]} />}>
-                Saved posts
-              </Menu.Item>
-              <Menu.Item icon={<IconMessage size={14} stroke={1.5} color={theme.colors.blue[6]} />}>
-                Your comments
-              </Menu.Item>
-
               <Menu.Label>Settings</Menu.Label>
               <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>Account settings</Menu.Item>
               <Menu.Item icon={<IconSwitchHorizontal size={14} stroke={1.5} />}>Change account</Menu.Item>
-              <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}  onClick={()=> {auth.medplum.signOut().then(()=> navigate("/"))}} >Logout</Menu.Item>
+              <Menu.Item icon={<IconLogout size={14} stroke={1.5} />} onClick={() => { auth.medplum.signOut().then(() => navigate("/")) }} >Logout</Menu.Item>
 
               <Menu.Divider />
-
-              <Menu.Label>Danger zone</Menu.Label>
-              <Menu.Item icon={<IconPlayerPause size={14} stroke={1.5} />}>Pause subscription</Menu.Item>
-              <Menu.Item color="red" icon={<IconTrash size={14} stroke={1.5} />}>
-                Delete account
-              </Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </Group>
