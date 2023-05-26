@@ -131,21 +131,40 @@ export function Measurement(): JSX.Element | null {
   const { measurementId } = useParams();
   const { code, title, description, chartDatasets } = measurementsMeta[measurementId as string];
   const medplum = useMedplum();
-  const patient = medplum.getProfile() as Patient;
+  const patientdummy = medplum.getProfile() as Patient;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [chartData, setChartData] = useState<ChartData<'line', number[]>>();
   const patients = medplum.searchResources('Patient').read();
+  const [patient, setPatient] = useState<Patient>();
+  let observations:Observation[];
+
+
+  // This function is triggered when the select changes
+  const selectChange = (event:any) => {
+    console.log(event);
+    const getpatient = medplum.readResource('Patient',event).read();
+    setPatient(getpatient);
+  };
 
 
   const rowdata = (patients.map((item) => (
-    {value:`${item.id}`,label:item.name?.[0].given?.[0]+" "+item.name?.[0].family}
+    { value: `${item.id}`, label: item.name?.[0].given?.[0] + " " + item.name?.[0].family }
   )));
 
-  console.log(rowdata)
+ // console.log(rowdata)
 
-  const observations = medplum
-    .searchResources('Observation', `code=${code}&patient=${getReferenceString(patient)}`)
+ if(!patient)
+ {
+  observations = medplum
+    .searchResources('Observation', `code=${code}&patient=${getReferenceString(patientdummy!)}`)
     .read();
+ }
+ else
+ {
+  observations = medplum
+    .searchResources('Observation', `code=${code}&patient=${getReferenceString(patient!)}`)
+    .read();
+ }
 
   useEffect(() => {
     if (observations) {
@@ -166,14 +185,10 @@ export function Measurement(): JSX.Element | null {
   }, [chartDatasets, observations]);
 
   function addObservation(formData: Record<string, string>): void {
-    
-    const patientid = formData.patientselect;
-    const patient_add_obs = medplum.readResource('Patient',patientid).read();
-
     const obs: Observation = {
       resourceType: 'Observation',
       status: 'preliminary',
-      subject: createReference(patient_add_obs),
+      subject: createReference(patient!),
       effectiveDateTime: new Date().toISOString(),
       code: {
         coding: [
@@ -220,9 +235,18 @@ export function Measurement(): JSX.Element | null {
 
   return (
     <Document>
+      <Group position="center" mb="xl">
+        <Select
+          name='patientselect'
+          label={<h2>Select the patient first</h2>}
+          placeholder="Pick one"
+          data={rowdata}
+          onChange={(e)=>{selectChange(e)}}
+        />
+      </Group>
       <Group position="apart" mb="xl">
         <Title order={1}>{title}</Title>
-        <Button onClick={() => setModalOpen(true)}>Add Measurement</Button>
+        <Button disabled={!patient} onClick={() => setModalOpen(true)}>Add Measurement</Button>
       </Group>
       {chartData && <LineChart chartData={chartData} />}
       <Box my="xl">
@@ -251,14 +275,6 @@ export function Measurement(): JSX.Element | null {
       <Modal size="lg" opened={modalOpen} onClose={() => setModalOpen(false)} title={title}>
         <Form onSubmit={addObservation}>
           <Stack spacing="md">
-          <Group position="center" mb="xl">
-      <Select
-      name='patientselect'
-      label="Select the Patient first"
-      placeholder="Pick one"
-      data={rowdata}
-    />
-      </Group>
             <Group grow noWrap>
               {chartDatasets.map((component) => (
                 <NumberInput key={component.label} label={component.label} name={component.label} />

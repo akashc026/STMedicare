@@ -171,9 +171,8 @@ export function HeaderBar(): JSX.Element {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Label>Settings</Menu.Label>
-              <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>Account settings</Menu.Item>
-              <Menu.Item icon={<IconSwitchHorizontal size={14} stroke={1.5} />}>Change account</Menu.Item>
-              <Menu.Item icon={<IconLogout size={14} stroke={1.5} />} onClick={() => { auth.medplum.signOut().then(() => navigate("/")) }} >Logout</Menu.Item>
+              <Menu.Item onClick={() => navigate(`/Practitioner/edit/${profile.id}`)} icon={<IconSettings size={14} stroke={1.5} />}>Edit Profile</Menu.Item>
+              <Menu.Item onClick={() => { auth.medplum.signOut().then(() => navigate("/")) }} icon={<IconLogout size={14} stroke={1.5} />} >Logout</Menu.Item>
 
               <Menu.Divider />
             </Menu.Dropdown>
