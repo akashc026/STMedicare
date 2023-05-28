@@ -148,11 +148,11 @@ export function AppointmentList(): JSX.Element {
 
                 <td>
                   <Text fz="sm" fw={500}>
-                    {item.start}
+                    {formatDateTime(item.start)}
                   </Text>
                 </td>
                 <td><Text fz="sm" fw={500}>
-                  {item.end}
+                  {formatDateTime(item.end)}
                 </Text></td>
                 <td>
                   <Text fz="sm" fw={500}>
